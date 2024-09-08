@@ -1,6 +1,14 @@
 {
   "extends": "@repo/typescript-config/nextjs.json",
   "compilerOptions": {
+    "baseUrl": ".", // This is important for the aliases to work
+    "paths": {
+      "@components/*": ["components/*"], // Add your aliases here
+      "@utils/*": ["utils/*"],
+      "@styles/*": ["styles/*"],
+      "@/*": ["./*"]
+      
+    },
     "plugins": [
       {
         "name": "next"
@@ -16,3 +24,4 @@
   ],
   "exclude": ["node_modules"]
 }
+
