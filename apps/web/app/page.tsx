@@ -1,5 +1,5 @@
 import AboutPage from "./components/about";
-import Message from "./components/message";
+
 
 export default function Home() {
   return (

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['herobot.app'], // Add the hostname "herobot.app" here
+        domains: ['herobot.app','cdn-icons-png.flaticon.com'], // Add the hostname "herobot.app" here
       },
 };
 

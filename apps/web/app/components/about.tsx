@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const AboutPage = () => {
   return (
@@ -29,9 +30,9 @@ const AboutPage = () => {
 
       {/* Get Started Button */}
       <div className="mt-12">
-        <button className="bg-yellow-400 text-white font-semibold py-3 px-16 rounded-full shadow-lg hover:bg-yellow-500 hover:scale-105 transition-all duration-300">
+        <Link href="/chat" className="bg-yellow-400 text-white font-semibold py-3 px-16 rounded-full shadow-lg hover:bg-yellow-500 hover:scale-105 transition-all duration-300">
           Get Started
-        </button>
+        </Link>
       </div>
     </div>
   );
