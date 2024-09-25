@@ -29,7 +29,7 @@ const AboutPage = () => {
       </div>
 
       {/* Get Started Button */}
-      <div className="mt-12">
+      <div className="mt-9">
         <Link href="/chat" className="bg-yellow-400 text-white font-semibold py-3 px-16 rounded-full shadow-lg hover:bg-yellow-500 hover:scale-105 transition-all duration-300">
           Get Started
         </Link>

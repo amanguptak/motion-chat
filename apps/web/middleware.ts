@@ -3,11 +3,11 @@ import type { NextRequest } from "next/server";
 import { auth } from "@/auth"; // Your auth function
 
 // Define which paths should be public
-const publicPaths = ["/login", "/register"];
+const publicPaths = ["/login", "/"];
 
 export async function middleware(request: NextRequest) {
   const session = await auth(); // Check session or token
-    console.log(session)
+    // console.log(session,"in middleware");
   // Get the pathname of the request (e.g., /dashboard, /login)
   const { pathname } = request.nextUrl;
 

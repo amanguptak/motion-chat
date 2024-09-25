@@ -30,7 +30,7 @@ const Navbar = () => {
             Start Chat
           </Link>
           <Link href="/" className="text-white hover:text-yellow-400 font-semibold">
-            About
+            Home
           </Link>
 
           {status === "authenticated" ? (
