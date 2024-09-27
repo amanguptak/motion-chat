@@ -1,4 +1,14 @@
 import { Server } from "socket.io";
+import Redis from "ioredis";
+
+const pub = new Redis({
+  host: process.env.REDIS_HOST!,
+  port: parseInt(process.env.REDIS_PORT!, 10),
+  username: process.env.REDIS_USERNAME!,
+  password: process.env.REDIS_PASSWORD!,
+});
+
+
 
 class SocketService {
   private _io: Server;
@@ -13,18 +23,40 @@ class SocketService {
         credentials: false, // Disable credentials for open access
       },
     });
+
+    sub.subscribe("MESSAGE")
   }
 
   public initListener() {
     const io = this._io;
     console.log("Initialized Socket listener");
-    io.on("connect", (socket) => {
-      console.log(`New socket Id connected: ${socket.id}`);
+    // io.on("connect", (socket) => {
+    //   console.log(`New socket Id connected: ${socket.id}`);
 
-      socket.on("event message", async ({ message }: { message: string }) => {
-        console.log(`New Message: received: ${message}`);
+    //   socket.on("event:message", async ({ message }: { message: string }) => {
+    //     console.log(`New Message: received: ${message}`);
+    //     await pub.publish("MESSAGE", JSON.stringify({message : message}));
+
+    //   });
+    // });
+
+    io.on("connect", (socket) => {
+      const { email, name } = socket.handshake.query;
+      console.log(`User connected: ${name} (${email})`);
+    
+      socket.on("event:message", async ({ message, email }) => {
+        const timestamp = new Date().toISOString();
+        await pub.publish(
+          "MESSAGE",
+          JSON.stringify({ email, message, timestamp })
+        );
       });
     });
+    sub.on("message",(channel,message)=>{
+      if(channel==="MESSAGE"){
+        io.emit("message",message)
+      }
+    })
   }
 
   get io() {
