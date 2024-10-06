@@ -1,11 +1,11 @@
 "use client";
 
-import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/react'; // Adjust for Auth.js
+import Link from "next/link";
+import { useSession, signOut } from "next-auth/react"; // Adjust for Auth.js
 
 const Navbar = () => {
   const { status } = useSession(); // Only using status for conditional rendering
-    console.log(status,"status is")
+  console.log(status, "status is");
   // Sign-out handler with console log and alert
   const handleSignOut = async () => {
     try {
@@ -22,16 +22,23 @@ const Navbar = () => {
     <nav className="bg-gradient-to-r from-[#6D91EE] to-[#3B4CAB] p-4 shadow-md w-full">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <div className="text-white font-bold text-2xl">Motion Otaku Chat</div>
+        <Link href="/" className="text-white font-bold text-2xl">Motion Otaku </Link>
 
         {/* Links */}
         <div className="space-x-8 hidden md:flex">
-          <Link href="/anime-list" className="text-white hover:text-yellow-400 font-semibold">
-          Anime 💕
+          <Link
+            href="/anime-list"
+            className="text-white hover:text-yellow-400 font-semibold"
+          >
+            Anime
           </Link>
-          <Link href="/" className="text-white hover:text-yellow-400 font-semibold">
+          {/* <Link
+            href="/"
+            className="text-white hover:text-yellow-400 font-semibold"
+          >
             Home
-          </Link>
+          </Link> */}
+          
 
           {status === "authenticated" ? (
             <>
@@ -46,10 +53,12 @@ const Navbar = () => {
           ) : (
             <>
               {/* Show Login and Register when user is NOT authenticated */}
-              <Link href="/login" className="text-white hover:text-yellow-400 font-semibold">
+              <Link
+                href="/login"
+                className="text-white hover:text-yellow-400 font-semibold"
+              >
                 Login
               </Link>
-            
             </>
           )}
         </div>

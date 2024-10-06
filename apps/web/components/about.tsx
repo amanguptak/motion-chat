@@ -10,9 +10,9 @@ const AboutPage = () => {
         
         {/* About Us Section */}
         <div className="w-full lg:w-1/2 text-center lg:text-left text-white">
-          <h2 className="text-5xl font-extrabold mb-6">Welcome to Motion Chat</h2>
+          <h2 className="text-5xl font-extrabold mb-6">Welcome to Motion Otaku Chat</h2>
           <p className="text-white text-lg leading-relaxed">
-            At Motion Chat, we believe in connecting people seamlessly across the globe. Whether you're catching up with friends, collaborating with colleagues, or meeting new people, we provide a platform that keeps your conversations flowing smoothly and in real time.
+          Motion Otaku Chat is your ultimate hub for anime enthusiasts! Explore your favorite anime series, movies, and more, while connecting with fellow otakus. Whether you want to discuss the latest episodes or theories, our platform provides the perfect space for all anime-related conversations.
           </p>
         </div>
         
@@ -30,7 +30,7 @@ const AboutPage = () => {
 
       {/* Get Started Button */}
       <div className="mt-9">
-        <Link href="/chat" className="bg-yellow-400 text-white font-semibold py-3 px-16 rounded-full shadow-lg hover:bg-yellow-500 hover:scale-105 transition-all duration-300">
+        <Link href="/anime-list" className="bg-yellow-400 text-white font-semibold py-3 px-16 rounded-full shadow-lg hover:bg-yellow-500 hover:scale-105 transition-all duration-300">
           Get Started
         </Link>
       </div>

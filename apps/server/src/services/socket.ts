@@ -8,7 +8,8 @@ import Redis from "ioredis";
 //   password: process.env.REDIS_PASSWORD!,
 // });
 
-
+}
+)
 
 class SocketService {
   private _io: Server;

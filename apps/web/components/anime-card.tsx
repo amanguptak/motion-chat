@@ -1,5 +1,6 @@
-// components/anime-card.tsx
-"use client"
+"use client";
+
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface AnimeCardProps {
@@ -18,17 +19,29 @@ interface AnimeCardProps {
 
 const AnimeCard: React.FC<AnimeCardProps> = ({ anime }) => {
   return (
-    <Link href={`/anime/${anime.mal_id}`}>
-      <div className="bg-[#2b4c90] rounded-lg shadow-lg hover:scale-105 transform transition-transform duration-300 hover:shadow-xl cursor-pointer overflow-hidden">
-        <img
-          src={anime.images.jpg.image_url}
-          alt={anime.title}
-          className="w-full h-56 object-cover rounded-t-lg"
-        />
+    <Link href={`/anime/${anime.mal_id}`} className="block w-full h-full">
+      <div className="relative bg-[#4b62c1] rounded-xl shadow-lg transition-transform duration-500 hover:scale-105 hover:shadow-2xl overflow-hidden">
+        {/* Anime Image */}
+        <div className="relative overflow-hidden rounded-t-lg">
+          <Image
+            src={anime.images.jpg.image_url}
+            alt={anime.title}
+            width={350}
+            height={500}
+            className="w-full h-72 object-cover transition-transform duration-500 hover:scale-110"
+          />
+        </div>
+
+        {/* Anime Info */}
         <div className="p-4">
-          <h2 className="text-2xl font-bold text-[#facc15] mb-2 truncate">{anime.title}</h2>
-          <p className="text-gray-200 line-clamp-2">{anime.synopsis?.substring(0, 120)}...</p>
-          <p className="text-[#facc15] mt-3">Score: {anime.score}</p>
+          <h2 className="text-xl font-semibold text-yellow-400 mb-2 truncate">{anime.title}</h2>
+          <p className="text-gray-300 line-clamp-2 mb-3">{anime.synopsis?.substring(0, 100)}...</p>
+          <div className="flex justify-between items-center">
+            <p className="text-yellow-400 font-semibold">Score: {anime.score || 'N/A'}</p>
+            <span className="text-sm text-yellow-300 font-semibold hover:text-yellow-400 transition-all">
+              View Details →
+            </span>
+          </div>
         </div>
       </div>
     </Link>
