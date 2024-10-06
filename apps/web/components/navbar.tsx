@@ -22,12 +22,12 @@ const Navbar = () => {
     <nav className="bg-gradient-to-r from-[#6D91EE] to-[#3B4CAB] p-4 shadow-md w-full">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <div className="text-white font-bold text-2xl">Motion Chat</div>
+        <div className="text-white font-bold text-2xl">Motion Otaku Chat</div>
 
         {/* Links */}
         <div className="space-x-8 hidden md:flex">
-          <Link href="/chat" className="text-white hover:text-yellow-400 font-semibold">
-            Start Chat
+          <Link href="/anime-list" className="text-white hover:text-yellow-400 font-semibold">
+          Anime 💕
           </Link>
           <Link href="/" className="text-white hover:text-yellow-400 font-semibold">
             Home

@@ -27,7 +27,7 @@ export default async function SignIn() {
         {/* Message */}
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-800 mb-2">
-            Welcome to Motion Chat!
+            Welcome to Motion Otaku Chat!
           </h2>
           <p className="text-gray-600">
             Connect with your friends and colleagues instantly. Sign in to get started!

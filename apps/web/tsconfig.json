@@ -1,14 +1,47 @@
+// {
+//   "extends": "@repo/typescript-config/nextjs.json",
+//   "compilerOptions": {
+//     "baseUrl": ".", // This is important for the aliases to work
+//     "paths": {
+//       "@components/*": ["components/*"], // Add your aliases here
+//       "@utils/*": ["utils/*"],
+//       "@styles/*": ["styles/*"],
+//       "@/*": ["./*"]
+//     },
+//     "plugins": [
+//       {
+//         "name": "next"
+//       }
+//     ]
+//   },
+//   "include": [
+//     "next-env.d.ts",
+//     "next.config.mjs",
+//     "**/*.ts",
+//     "**/*.tsx",
+//     ".next/types/**/*.ts"
+//   ],
+//   "exclude": ["node_modules"]
+// }
 {
   "extends": "@repo/typescript-config/nextjs.json",
   "compilerOptions": {
     "baseUrl": ".", // This is important for the aliases to work
     "paths": {
-      "@components/*": ["components/*"], // Add your aliases here
-      "@utils/*": ["utils/*"],
-      "@styles/*": ["styles/*"],
-      "@/*": ["./*"]
-      
+      "@components/*": [
+        "components/*"
+      ], // Add your aliases here
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@/*": [
+        "./*"
+      ]
     },
+    "jsx": "preserve", // Ensure this is added here
     "plugins": [
       {
         "name": "next"
@@ -22,6 +55,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
-
