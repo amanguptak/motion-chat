@@ -23,7 +23,6 @@ const SchedulesPage: React.FC = () => {
   const [kids, setKids] = useState<string>("false");
   const [sfw, setSfw] = useState<string>("true");
 
-  // Fetch schedule data
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -43,10 +42,8 @@ const SchedulesPage: React.FC = () => {
   }, [filter, kids, sfw]);
 
   return (
-    <div className="min-h-screen p-6 bg-gradient-to-b from-[#4357b5] to-[#2b4c90] text-white">
-      <h1 className="text-4xl font-bold mb-8 text-center text-yellow-400">
-        Anime Schedules
-      </h1>
+    <div className="min-h-screen p-6  text-white">
+      <h1 className="text-4xl font-bold mb-8 text-center text-yellow-400">Anime Schedules</h1>
 
       {/* Filters */}
       <div className="flex justify-center gap-8 mb-8">
@@ -81,19 +78,19 @@ const SchedulesPage: React.FC = () => {
       {error && <p className="bg-red-500 p-4 rounded-lg text-center">{error}</p>}
 
       {/* Masonry Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto">
+      <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
         {!loading &&
           schedules.map((schedule) => (
             <div
               key={schedule.mal_id}
-              className="p-4 bg-[#2b4c90] rounded-lg hover:shadow-lg transition-all"
+              className="break-inside-avoid p-4 bg-[#4b62c1] rounded-lg hover:shadow-lg transition-all"
             >
-              <div className="relative w-full h-[250px] rounded-lg overflow-hidden">
+              <div className="relative w-full h-[300px] rounded-lg overflow-hidden">
                 <Image
                   src={schedule.images.jpg.image_url}
                   alt={schedule.title}
                   layout="fill"
-                  objectFit="contain"
+                  objectFit="cover"
                   className="transition-transform duration-300 ease-in-out hover:scale-105"
                 />
               </div>
@@ -103,14 +100,7 @@ const SchedulesPage: React.FC = () => {
               <p className="text-gray-300 mt-2">
                 {schedule.synopsis || "No synopsis available."}
               </p>
-              <div className="mt-4 text-right">
-                <a
-                  href={`/anime/${schedule.mal_id}`}
-                  className="inline-block px-4 py-2 bg-yellow-400 text-[#2b4c90] font-semibold rounded-full hover:bg-yellow-500 transition"
-                >
-                  View Details
-                </a>
-              </div>
+            
             </div>
           ))}
       </div>
@@ -133,13 +123,13 @@ interface FilterSelectProps {
 
 const FilterSelect: React.FC<FilterSelectProps> = ({ label, value, options, onChange }) => (
   <div className="flex flex-col items-center">
-    <label className="block text-lg font-semibold text-yellow-400 mb-2">
+    <label className="block text-md font-semibold text-yellow-400 mb-2">
       {label}:
     </label>
     <select
       value={value}
       onChange={onChange}
-      className="bg-[#2b4c90] text-white font-medium rounded-md py-2 px-4 transition duration-300 hover:shadow-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none"
+      className="bg-[#4b62c1] text-white font-medium rounded-md py-2 px-4 transition duration-300 hover:shadow-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none"
     >
       {options.map((option) => (
         <option key={option} value={option}>

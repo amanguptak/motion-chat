@@ -113,19 +113,24 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center p-6 bg-[#4357b5] text-white">
-      {/* Search Section */}
-      <Link
-        href="/top-anime"
-        className="text-[#4357b5] hover:text-yellow-400 hover:bg-[#4357b5] font-semibold bg-yellow-400 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 p-2 px-5 ease-in-out self-start mb-6 mt-4"
-      >
-        Explore Top Anime
-      </Link>
-      <Link
-        href="/schedule"
-        className="text-[#4357b5] hover:text-yellow-400 hover:bg-[#4357b5] font-semibold bg-yellow-400 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 p-2 px-5 ease-in-out self-start mb-6 mt-4"
-      >
-        Schedules
-      </Link>
+      
+      {/* Secondary Navbar */}
+      <nav className="w-full py-4">
+        <div className="flex justify-center space-x-8">
+          <Link
+            href="/top-anime"
+            className="text-white hover:text-yellow-400 font-semibold hover:underline"
+          >
+            Top Anime
+          </Link>
+          <Link
+            href="/schedule"
+            className="text-white hover:text-yellow-400 font-semibold hover:underline"
+          >
+            Schedule Anime
+          </Link>
+        </div>
+      </nav>
 
       <section className="w-full max-w-5xl mt-8">
         <h1 className="text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600 drop-shadow-md">
