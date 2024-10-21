@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "../components/navbar";
 import { SocketProvider } from "@/context/SocketProvider";
 import { SessionProvider } from "next-auth/react";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -25,16 +26,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <SessionProvider>
-      <SocketProvider>
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
-          <main className="bg-gradient-to-r from-[#6D91EE] to-[#3B4CAB] min-h-screen ">
-            <Navbar/>
-            {children}
+      <head />
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <SessionProvider>
+          <SocketProvider>
+            <main className="bg-gradient-to-r from-[#6D91EE] to-[#3B4CAB] min-h-screen">
+              <Navbar />
+              {children}
             </main>
-        </body>
-      </SocketProvider>
-      </SessionProvider>
+          </SocketProvider>
+        </SessionProvider>
+      </body>
     </html>
   );
 }

@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { io, Socket } from "socket.io-client";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 interface SocketProviderI {
   children?: React.ReactNode;
@@ -31,6 +32,7 @@ export const SocketProvider = ({ children }: SocketProviderI) => {
   const { data: session, status } = useSession(); // Get session and authentication status
   const [socket, setSocket] = useState<Socket | null>(null);
   const [messages, setMessages] = useState<MessageI[]>([]); // State to store messages with timestamp
+  const router = useRouter(); // Initialize useRouter
 
   // Send a message through the socket
   const sendMessage = useCallback(
@@ -77,16 +79,16 @@ export const SocketProvider = ({ children }: SocketProviderI) => {
       };
     }
   }, [session, status, onMessageReceived]);
-  
 
   // If the session is loading, show a loading state
   if (status === "loading") {
     return <div>Loading...</div>;
   }
 
-  // If the user is not authenticated, show a message
-  if (!session) {
-    return <div>User is not authenticated</div>;
+  // If the user is not authenticated, redirect to login page
+  if (!session && status === "unauthenticated") {
+    router.push("/login"); // Redirect to login page
+   ; // Return null to prevent rendering anything
   }
 
   return (

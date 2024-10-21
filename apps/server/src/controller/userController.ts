@@ -6,12 +6,23 @@ export const createUser = async (req: Request, res: Response) => {
     const { username, email } = req.body;
 
     try {
-        const user = await db.user.create({
-            data: { username, email },
+        // Check if the user already exists based on the email
+        const existingUser = await db.user.findUnique({
+            where: { email },
         });
-        res.status(201).json({ message: "User created successfully", user });
+
+        if (existingUser) {
+            // User already exists, return the existing user
+            res.status(200).json({ message: "User already exists", user: existingUser });
+        } else {
+            // Create a new user if one doesn't exist
+            const newUser = await db.user.create({
+                data: { username, email },
+            });
+            res.status(201).json({ message: "User created successfully", user: newUser });
+        }
     } catch (error) {
-        res.status(500).json({ message: "Error creating user", error });
+        res.status(500).json({ message: "Error handling user data", error });
     }
 };
 

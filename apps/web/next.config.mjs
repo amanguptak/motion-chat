@@ -1,8 +1,22 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-    images: {
-        domains: ['herobot.app','cdn-icons-png.flaticon.com','cdn.myanimelist.net'], // Add the hostname "herobot.app" here
+
+export default {
+  reactStrictMode: false,
+  exportPathMap: async function (defaultConfig, { dev, dir, outDir }) {
+    // ... (Optional: Handle export paths if needed)
+  },
+  // ... (Other Next.js configuration options)
+  images: {
+    domains: ['herobot.app','cdn-icons-png.flaticon.com','cdn.myanimelist.net'],  // Add other domains as needed
+  },
+  // Adding the proxy configuration
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://api.jikan.moe/v4/:path*',
       },
+    ];
+  },
 };
 
-export default nextConfig;

@@ -1,15 +1,4 @@
-import { Server } from "socket.io";
-import Redis from "ioredis";
 
-// const pub = new Redis({
-//   host: process.env.REDIS_HOST!,
-//   port: parseInt(process.env.REDIS_PORT!, 10),
-//   username: process.env.REDIS_USERNAME!,
-//   password: process.env.REDIS_PASSWORD!,
-// });
-
-}
-)
 
 class SocketService {
   private _io: Server;
