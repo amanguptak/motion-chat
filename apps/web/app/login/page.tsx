@@ -1,3 +1,4 @@
+
 import { auth, signIn } from "@/auth";
 import Image from "next/image";
 import { redirect } from 'next/navigation';
@@ -7,7 +8,24 @@ export default async function SignIn() {
 
   // Server-side redirect if the user is authenticated
   if (session) {
-    redirect('/'); // Redirects authenticated users to the chat page
+  
+    const username = session?.user?.name;
+    const email = session?.user?.email;
+
+    // Send user info to the backend
+    try {
+      await fetch("http://localhost:8000/api/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email }),
+      });
+    } catch (error) {
+      console.error("Failed to store user data:", error);
+    }
+
+    redirect('/anime-list'); // Redirects authenticated users to the chat page
   }
 
   return (
@@ -38,7 +56,7 @@ export default async function SignIn() {
         <form
           action={async () => {
             "use server";
-            await signIn("google", { redirectTo: "/" });
+            await signIn("google", { redirectTo: "/anime-list" });
           }}
           className="w-full"
         >
@@ -59,3 +77,4 @@ export default async function SignIn() {
     </div>
   );
 }
+
