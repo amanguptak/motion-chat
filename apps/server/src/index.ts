@@ -25,10 +25,11 @@ import http from "http";
 import SocketService from './services/socket'; // Your Socket service
 import Routes from "./routes/index"; // Import user routes
 import db from './services/prisma'; // Import your Prisma client
-
+import {startMessageConsumer}from "./services/kafka"
 dotenv.config();
 
 async function init() {
+    startMessageConsumer()
     const app = express();
     const httpServer = http.createServer(app); // Attach Express to the HTTP server
     const socketService = new SocketService();

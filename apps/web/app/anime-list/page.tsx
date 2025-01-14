@@ -26,6 +26,8 @@ const HomePage = () => {
 
   const searchHandledRef = useRef(false);
 
+
+
   useEffect(() => {
     if (queryParam && !searchHandledRef.current) {
       searchHandledRef.current = true;

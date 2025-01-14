@@ -33,6 +33,10 @@ const nextConfig = {
         destination: '/api/auth/:path*', // Skip rewrite for auth paths
       },
       {
+        source: '/api/create',
+        destination: '/api/create', // Skip rewrite for the create endpoint
+      },
+      {
         source: '/api/:path*',
         destination: 'https://api.jikan.moe/v4/:path*',
       },

@@ -5,27 +5,12 @@ import { redirect } from 'next/navigation';
 
 export default async function SignIn() {
   const session = await auth();
-
+  console.log(session,"is authenticated session is there")
   // Server-side redirect if the user is authenticated
   if (session) {
-  
-    const username = session?.user?.name;
-    const email = session?.user?.email;
-
-    // Send user info to the backend
-    try {
-      await fetch("http://localhost:8000/api/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, email }),
-      });
-    } catch (error) {
-      console.error("Failed to store user data:", error);
-    }
-
-    redirect('/anime-list'); // Redirects authenticated users to the chat page
+   
+    redirect('/anime-list'); 
+// Redirects authenticated users to the chat page
   }
 
   return (
@@ -77,4 +62,3 @@ export default async function SignIn() {
     </div>
   );
 }
-

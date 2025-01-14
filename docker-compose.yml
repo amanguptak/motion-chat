@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: aman_motion
       POSTGRES_PASSWORD: motion_chat
-      POSTGRES_DB: motion-chat
+      POSTGRES_DB: aman_motion  # Ensure this database exists
     ports:
       - "5433:5432"
     volumes:
@@ -32,8 +32,124 @@ services:
     networks:
       - backend-network
 
+  zookeeper:
+    image: 'confluentinc/cp-zookeeper:latest'
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - backend-network
+
+  kafka:
+    image: 'confluentinc/cp-kafka:latest'
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"  # Port for external access
+      - "9093:9093"  # Port for internal broker communication
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: 'INTERNAL://kafka:9093,EXTERNAL://localhost:9092'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT'
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - backend-network
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui-new
+    depends_on:
+      - kafka
+    ports:
+      - "8081:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "local"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:9093"  # Use internal listener
+      KAFKA_CLUSTERS_0_ZOOKEEPER: "zookeeper:2181"
+    networks:
+      - backend-network  
+
 volumes:
   postgres-data:
 
 networks:
   backend-network:
+
+
+# Not always, but it depends on your **use case** and **networking requirements**. Here's a detailed explanation:
+
+# ---
+
+# ### **When You Need Different Ports for Internal and External Communication**
+# This is necessary when:
+# 1. **Multi-Node Kafka Cluster**:
+#    - Kafka brokers communicate with each other using an **internal listener**.
+#    - External clients (producers, consumers, Kafka-UI) communicate via an **external listener**.
+#    - Separation is crucial to ensure that Kafka can distinguish between:
+#      - Broker-to-broker communication.
+#      - Client-to-broker communication.
+
+# 2. **Dockerized Setup (Like Yours)**:
+#    - In a Docker Compose setup, Kafka services communicate on the **internal Docker network** using the **internal listener**.
+#    - External clients (e.g., Kafka CLI tools, Kafka-UI) need to connect via the **external listener** on the host machine.
+
+# 3. **Production Environments**:
+#    - For enhanced security and better control over routing, different ports are used for internal and external communication.
+#    - This separation avoids exposing internal broker communication unnecessarily.
+
+# ---
+
+# ### **When You Don’t Need Separate Ports**
+# You can use a single listener for both internal and external communication if:
+# 1. **Single Node Kafka**:
+#    - In local development or testing, a single listener (e.g., `PLAINTEXT://localhost:9092`) is sufficient.
+
+# 2. **No External Clients**:
+#    - If all your clients and applications (producers, consumers) are running within the same network (e.g., inside Docker Compose), a single listener is adequate.
+
+# 3. **Non-Dockerized Setup**:
+#    - If Kafka is installed directly on the host (not containerized) and all clients run on the same machine, you can use one listener.
+
+# ---
+
+# ### **Why Different Ports Are Used in Dockerized Environments**
+# In a Dockerized setup:
+# - **Internal Communication**:
+#   - Kafka communicates with other brokers and Zookeeper using hostnames like `kafka:9093` via the Docker network.
+# - **External Communication**:
+#   - External clients (on your host machine or elsewhere) communicate with Kafka using `localhost:9092`.
+
+# Without separating these listeners, Kafka might advertise the wrong address:
+# - Clients outside Docker would see `kafka:9093` (internal network hostname) and fail to connect.
+
+# ---
+
+# ### **How to Simplify the Setup for Local Development**
+# If you don’t want to configure multiple listeners for local use:
+# 1. Use a single listener:
+#    ```yaml
+#    KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://localhost:9092'
+#    KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'PLAINTEXT:PLAINTEXT'
+#    ```
+# 2. Ensure all tools (e.g., Kafka-UI) and clients use `localhost:9092`.
+
+# This works well for single-node setups or purely local environments.
+
+# ---
+
+# ### **Key Takeaways**
+# - **Separate Listeners**:
+#   - Necessary for production or multi-node setups.
+#   - Recommended for Dockerized environments to distinguish internal and external communication.
+
+# - **Single Listener**:
+#   - Simpler but suited for local development or small setups.
+#   - Avoids the need to deal with multiple ports.
+
+# In your case, because you're using **Docker Compose** and **Kafka-UI**, it's better to use separate listeners.

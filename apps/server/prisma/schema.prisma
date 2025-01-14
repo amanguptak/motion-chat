@@ -40,7 +40,8 @@ model User {
 model Message {
   id             Int      @id @default(autoincrement())
   senderId       Int
-  conversationId Int
+  conversationId Int       @default(autoincrement())
+  content        String  
   createdAt      DateTime @default(now())
 
   // Add this to establish the relation back to User

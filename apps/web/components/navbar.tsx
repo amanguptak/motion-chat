@@ -9,7 +9,9 @@ const Navbar = () => {
   // Sign-out handler with console log and alert
   const handleSignOut = async () => {
     try {
-      await signOut({ callbackUrl: "/login" }); // Redirect to login after sign out
+      await signOut({ callbackUrl: "/login" });
+   
+       // Redirect to login after sign out
       console.log("User has signed out.");
       alert("You have successfully signed out.");
     } catch (error) {

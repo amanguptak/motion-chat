@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import Redis from "ioredis";
+import { produceMessage } from "./kafka";
 
 // const pub = new Redis({
 //   host: process.env.REDIS_HOST!,
@@ -7,6 +8,7 @@ import Redis from "ioredis";
 //   username: process.env.REDIS_USERNAME!,
 //   password: process.env.REDIS_PASSWORD!,
 // });
+
 
 
 class SocketService {
@@ -41,7 +43,7 @@ class SocketService {
 
     io.on("connect", (socket) => {
       const { email, name } = socket.handshake.query;
-      console.log(`User connected: ${name} (${email})`);
+      // console.log(`User connected: ${name} (${email})`);
     
       socket.on("event:message", async ({ message, email }) => {
         const timestamp = new Date().toISOString();
@@ -51,9 +53,11 @@ class SocketService {
         );
       });
     });
-    sub.on("message",(channel,message)=>{
+    sub.on("message", async(channel,message)=>{
       if(channel==="MESSAGE"){
         io.emit("message",message)
+        await produceMessage(message);
+        console.log("message produce kafka")
       }
     })
   }
